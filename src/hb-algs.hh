@@ -1302,7 +1302,7 @@ static inline void
 hb_qsort (void *base, size_t nel, size_t width,
 	  int (*compar)(const void *_a, const void *_b))
 {
-#if defined(__OPTIMIZE_SIZE__) && !defined(HB_USE_INTERNAL_QSORT)
+#if defined(__CHERI_PURE_CAPABILITY__) || (defined(__OPTIMIZE_SIZE__) && !defined(HB_USE_INTERNAL_QSORT))
   qsort (base, nel, width, compar);
 #else
   sort_r_simple (base, nel, width, compar);
