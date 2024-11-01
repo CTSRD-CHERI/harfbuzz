@@ -415,18 +415,18 @@ bool
 hb_blob_t::try_make_writable_inplace_unix ()
 {
 #if defined(HAVE_SYS_MMAN_H) && defined(HAVE_MPROTECT)
-  uintptr_t pagesize = -1, mask, length;
+  size_t pagesize = -1, mask, length;
   const char *addr;
 
 #if defined(HAVE_SYSCONF) && defined(_SC_PAGE_SIZE)
-  pagesize = (uintptr_t) sysconf (_SC_PAGE_SIZE);
+  pagesize = (size_t ) sysconf (_SC_PAGE_SIZE);
 #elif defined(HAVE_SYSCONF) && defined(_SC_PAGESIZE)
-  pagesize = (uintptr_t) sysconf (_SC_PAGESIZE);
+  pagesize = (size_t ) sysconf (_SC_PAGESIZE);
 #elif defined(HAVE_GETPAGESIZE)
-  pagesize = (uintptr_t) getpagesize ();
+  pagesize = (size_t ) getpagesize ();
 #endif
 
-  if ((uintptr_t) -1L == pagesize) {
+  if ((size_t) -1L == pagesize) {
     DEBUG_MSG_FUNC (BLOB, this, "failed to get pagesize: %s", strerror (errno));
     return false;
   }
